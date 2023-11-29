@@ -1,10 +1,4 @@
-# Return Mode
-
-<!-- Perhaps do this OR could have common docs here thinking about it
-- [Return Mode (MC)](../flight_modes_mc/return.md)
-- [Return Mode (FW)](../flight_modes_fw/return.md)
-- [Return Mode (VTOL)](../flight_modes_vtol/return.md)
--->
+# Return Mode (VTOL)
 
 [<img src="../../assets/site/position_fixed.svg" title="Position fix required (e.g. GPS)" width="30px" />](../getting_started/flight_modes.md#key_position_fixed)
 
