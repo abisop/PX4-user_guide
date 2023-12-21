@@ -141,6 +141,7 @@
     * [Offboard Mode](flight_modes/offboard.md)
     * [Mission Mode (VTOL)](flight_modes_vtol/mission.md)
     * [Return Mode (VTOL)](flight_modes_vtol/return.md)
+    * [Return Mode (Generic/All)](flight_modes/return.md)
   * [Terrain Following/Holding](flying/terrain_following_holding.md)
 * [Flight Log Analysis](log/flight_log_analysis.md)
   * [Log Analysis using Flight Review](log/flight_review.md)

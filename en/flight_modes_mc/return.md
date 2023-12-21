@@ -4,7 +4,7 @@
 
 The _Return_ flight mode is used to _fly a vehicle to safety_ on an unobstructed path to a safe destination, where it can land.
 
-Multicopters typically use a _home/rally point return_ by default.
+Multicopters use a _home/rally point return_ by default.
 In this return type vehicles ascend to a safe altitude above obstructions if needed, fly directly to the closest safe landing point (a rally point or the home position), descend to the "descent altitude", and then land after a short delay.
 The return altitude, descent altitude, and landing delay are normally set to conservative "safe" values, but can be changed if needed.
 

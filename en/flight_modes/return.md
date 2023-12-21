@@ -1,19 +1,14 @@
-# Return Mode
-
-<!-- Perhaps do this OR could have common docs here thinking about it
-- [Return Mode (MC)](../flight_modes_mc/return.md)
-- [Return Mode (FW)](../flight_modes_fw/return.md)
-- [Return Mode (VTOL)](../flight_modes_vtol/return.md)
--->
+# Return Mode (Generic Vehicle)
 
 [<img src="../../assets/site/position_fixed.svg" title="Position fix required (e.g. GPS)" width="30px" />](../getting_started/flight_modes.md#key_position_fixed)
 
-The _Return_ flight mode is used to _fly a vehicle to safety_ on an unobstructed path to a safe destination, where it may either wait (hover or circle) or land.
+The _Return_ flight mode is used to _fly a vehicle to safety_ on an unobstructed path to a safe destination, where it should land.
 
-PX4 provides several mechanisms for choosing a safe return path, destination and landing, including using home location, rally ("safe") points, mission paths, and mission landing sequences.
+The following topics should be read first if you're using these vehicle types:
 
-The following sections explain how to configure the [return type](#return_types), [return altitude](#return_altitude) and [landing/arrival behaviour](#arrival).
-At the end there are sections explaining the _default_ (preconfigured) behaviour for each [vehicle type](#default_configuration).
+- [Multicopter](../flight_modes_mc/return.md)
+- [Fixed-wing (Plane)](../flight_modes_fw/return.md)
+- [VTOL](../flight_modes_vtol/return.md)
 
 :::note
 
@@ -29,6 +24,18 @@ At the end there are sections explaining the _default_ (preconfigured) behaviour
 <!-- https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/commander/ModeUtil/mode_requirements.cpp -->
 
 :::
+
+## Overview
+
+PX4 provides several mechanisms for choosing a safe return path, destination and landing, including using home location, rally ("safe") points, mission paths, and landing sequences defined in a mission.
+
+All vehicles _nominally_ support all of these mechanisms, but not all of them make as much sense for particular vehicles.
+For example, a multicopter can land virtually anywhere, so it doesn't make sense for it to use a landing sequence except in rare cases.
+Similarly, a fixed-wing vehicle needs to fly a safe landing path: it can use the home location as a return point, but it won't try and land on it by default.
+
+This topic covers all the possible return types that any vehicle _might_ be configured to use (the vehicle-specific return mode topics cover the default/recommended return type and configuration for each vehicle).
+
+The following sections explain how to configure the [return type](#return_types), [return altitude](#return_altitude) and [landing/arrival behaviour](#arrival).
 
 <a id="return_types"></a>
 
@@ -176,47 +183,6 @@ Unless executing a mission landing (e.g. if executing a [home location return](#
 
 The vehicle will the loiter for a specified time ([RTL_LAND_DELAY](#RTL_LAND_DELAY)) and then land.
 If [RTL_LAND_DELAY=-1](#RTL_LAND_DELAY) it will loiter indefinitely.
-
-<a id="default_configuration"></a>
-
-## Vehicle Default Behaviour
-
-The mode is _implemented_ in almost exactly the same way in all vehicle types (the exception being that fixed-wing vehicles will circle rather than hover when waiting), and are hence tuned using the same parameters.
-
-However the _default configuration_ is tailored to suit the vehicle type, as described below.
-
-### Multi-Copter (MC)
-
-Multicopters use a [home location return](#home_return) by default (and the following configuration):
-
-- Ascend to [RTL_RETURN_ALT](#RTL_RETURN_ALT) ([RTL_CONE_ANG=0](#RTL_CONE_ANG) - cone not used).
-- Fly to the home position in a straight line and constant altitude (if already above the return altitude it will return at its current altitude).
-- Rapidly descend to the [RTL_DESCEND_ALT](#RTL_DESCEND_ALT) altitude.
-- Land more or less immediately (small [RTL_LAND_DELAY](#RTL_LAND_DELAY)).
-
-### Fixed-wing (FW)
-
-Fixed-wing aircraft use a [mission landing return type](#mission_landing_return) by default:
-
-- If a mission landing is defined, fly direct to the mission landing start point and then land.
-- Otherwise fly directly to the home position and circle above it at radius [NAV_LOITER_RAD](#NAV_LOITER_RAD).
-
-If not following a mission landing, and [RTL_LAND_DELAY](#RTL_LAND_DELAY) is set to -1, the vehicle will land in the same way as [Land mode](../flight_modes_fw/land.md).
-
-The fixed-wing [safe return altitude](#return_altitude) depends only on [RTL_RETURN_ALT](#RTL_RETURN_ALT) (the cone defined by [RTL_CONE_ANG](#RTL_CONE_ANG) is not used)
-
-RC stick movement is ignored.
-
-### VTOL
-
-VTOL aircraft use a [mission landing return type](#mission_landing_return) by default:
-
-- If a mission landing is defined, fly direct to the mission landing start point and then land.
-- Otherwise fly directly to the home position, transition to multicopter mode, and land as a multicopter.
-
-  :::note
-  If not in a mission landing, a VTOL in FW mode will _always_ transition back to MC just before landing (ignoring [NAV_FORCE_VT](../advanced_config/parameter_reference.md#NAV_FORCE_VT)).
-  :::
 
 ## Parameters
 
